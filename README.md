@@ -25,6 +25,12 @@ I don't know yet. In the meantime:
 	    "stat": "ok"
 	}
 
+To do
+--
+
+* Add the ability to pass a URL (which will mean patching the RoyGBiv
+constructor to accept a PIL.Image object rather than a filename) ... maybe
+
 See also
 --
 
