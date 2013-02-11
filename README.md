@@ -31,9 +31,18 @@ To do
 * Add the ability to pass a URL (which will mean patching the RoyGBiv
 constructor to accept a PIL.Image object rather than a filename) ... maybe
 
+Dependencies
+--
+
+* [numpy](http://pypi.python.org/pypi/numpy)
+
+* [webcolors](http://pypi.python.org/pypi/webcolors/)
+
+* [colormath](http://pypi.python.org/pypi/colormath/)
+
+* [gunicorn](http://www.gunicorn.org/)
+
 See also
 --
 
 * [RoyGBiv](https://github.com/givp/RoyGBiv)
-
-* [gunicorn](http://gunicorn.org/)
