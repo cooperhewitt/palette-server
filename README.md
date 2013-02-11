@@ -40,9 +40,7 @@ Dependencies
 
 * [colormath](http://pypi.python.org/pypi/colormath/)
 
+* [RoyGBiv](https://github.com/givp/RoyGBiv)
+
 * [gunicorn](http://www.gunicorn.org/)
 
-See also
---
-
-* [RoyGBiv](https://github.com/givp/RoyGBiv)
