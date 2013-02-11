@@ -47,7 +47,6 @@ def app(environ, start_response):
 
         return {
             'colour': hex,
-            'web': web_actual,
             'closest': web_closest
             }
 
