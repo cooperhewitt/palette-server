@@ -47,7 +47,8 @@ def app(environ, start_response):
 
         return {
             'colour': hex,
-            'closest': web_closest
+            'closest': web_closest,
+            'palette': 'css3'
             }
 
     def get_palette(path):
