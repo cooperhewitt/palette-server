@@ -48,7 +48,6 @@ def app(environ, start_response):
         return {
             'colour': hex,
             'closest': web_closest,
-            'palette': 'css3'
             }
 
     def get_palette(path):
@@ -60,7 +59,7 @@ def app(environ, start_response):
         average = prep(average)
         palette = map(prep, palette)
 
-        return { 'average': average, 'palette': palette }
+        return { 'reference-closest': 'css3', 'average': average, 'palette': palette }
 
     status = '200 OK'
     rsp = {}

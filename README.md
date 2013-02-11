@@ -14,15 +14,34 @@ I don't know yet. In the meantime:
 	$>curl  'http://localhost:8000?path=/Users/asc/Desktop/cat.jpg' | python -m json.tool
 
 	{
-	    "average": "#8e895a", 
-	    "palette": [
-	        "#957d34", 
-	        "#786438", 
-	        "#b0a370", 
-	        "#576710", 
-	        "#827968"
-	    ], 
-	    "stat": "ok"
+		"reference-closest": "css3",
+		"average": {
+			"closest": "#808080", 
+			"colour": "#8e895a", 
+		}, 
+		"palette": [
+			{
+				"closest": "#a0522d", 
+				"colour": "#957d34", 
+		        }, 
+        		{
+				"closest": "#556b2f", 
+				"colour": "#786438", 
+		        }, 
+		        {
+				"closest": "#bdb76b", 
+				"colour": "#b0a370", 
+		        }, 
+		        {
+				"closest": "#556b2f", 
+				"colour": "#576710", 
+		        }, 
+		        {
+				"closest": "#808080", 
+				"colour": "#827968", 
+		        }
+		], 
+		"stat": "ok"
 	}
 
 To do
