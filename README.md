@@ -47,18 +47,26 @@ I don't know yet. In the meantime:
 To do
 --
 
+* Unbundle all the private/locally scoped functions inside of the `app`
+* function. It works but it's kind of stupid.
+
 * Calculate and return the [Shannon
   entropy](https://github.com/straup/colour-utils/blob/master/python/shannon.py)
   for an image.
  
 * Import the [colour-utils colour.py
   code](https://github.com/straup/colour-utils/blob/master/python/colour.py) and
-  allow for custom palettes when calculating the closest colour(s) for a palette.
+  allow for custom palettes when calculating the closest colour(s) for a
+  palette. Currently the server is hard-coded to "snap to grid" using the CSS3
+  palette.
 
 * Add the ability to pass a URL (which will mean patching the RoyGBiv
 constructor to accept a PIL.Image object rather than a filename) ... maybe
 
 * A proper `setup.py` script for installing dependencies (see below).
+
+* A proper `init.d` script (or equivalent) for starting and stopping the
+  palette-server.
 
 Dependencies
 --
