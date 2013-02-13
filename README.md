@@ -1,7 +1,7 @@
 palette-server
 ==
 
-palette-server is a small little WSGI-derived httpony to extract colours from an image.
+palette-server is a small little WSGI-compliant httpony to extract colours from an image.
 
 How to run it
 --
