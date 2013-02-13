@@ -1,7 +1,7 @@
 palette-server
 ==
 
-palette-server is a dumb little (wsgi) httpony to extract colours from an image.
+palette-server is a small little WSGI-derived httpony to extract colours from an image.
 
 How to run it
 --
@@ -47,8 +47,18 @@ I don't know yet. In the meantime:
 To do
 --
 
+* Calculate and return the [Shannon
+  entropy](https://github.com/straup/colour-utils/blob/master/python/shannon.py)
+  for an image.
+ 
+* Import the [colour-utils colour.py
+  code](https://github.com/straup/colour-utils/blob/master/python/colour.py) and
+  allow for custom palettes when calculating the closest colour(s) for a palette.
+
 * Add the ability to pass a URL (which will mean patching the RoyGBiv
 constructor to accept a PIL.Image object rather than a filename) ... maybe
+
+* A proper `setup.py` script for installing dependencies (see below).
 
 Dependencies
 --
