@@ -47,8 +47,7 @@ I don't know yet. In the meantime:
 To do
 --
 
-* Unbundle all the private/locally scoped functions inside of the `app`
-* function. It works but it's kind of stupid.
+* Unbundle all the private/locally scoped functions inside of the `app` function. It works but it's kind of stupid.
 
 * Calculate and return the [Shannon
   entropy](https://github.com/straup/colour-utils/blob/master/python/shannon.py)
