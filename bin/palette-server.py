@@ -1,9 +1,9 @@
 import roygbiv
 import webcolors
-
+import shannon
 import json
 import cgi
-
+import Image
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -61,6 +61,13 @@ def app(environ, start_response):
 
         return { 'reference-closest': 'css3', 'average': average, 'palette': palette }
 
+    def get_shannon(path):
+
+	img = Image.open(path)
+	shan = shannon.image_entropy(img)
+	
+	return shan
+
     status = '200 OK'
     rsp = {}
 
@@ -78,6 +85,7 @@ def app(environ, start_response):
         try:
             rsp = get_palette(path)
             rsp['stat']  = 'ok'
+            rsp['shannon'] = get_shannon(path)		
         except Exception, e:
             logging.error(e)
             rsp = {'stat': 'error', 'error': "failed to process image: %s" % e}
