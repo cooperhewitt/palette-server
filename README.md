@@ -11,6 +11,10 @@ I don't know yet. In the meantime:
 	$> cd palette-server/bin
 	$> gunicorn palette-server:app
 
+There's also a stub `init.d` script in the `init.d` directory. You will need to
+adjust the specifics (paths, gunicorn configs. etc.) to taste. Either way you
+get the palette server to tell you things by invoking it like this:
+
 	$>curl  'http://localhost:8000?path=/Users/asc/Desktop/cat.jpg' | python -m json.tool
 
 	{
