@@ -53,10 +53,6 @@ To do
 
 * Unbundle all the private/locally scoped functions inside of the `app` function. It works but it's kind of stupid.
 
-* Calculate and return the [Shannon
-  entropy](https://github.com/straup/colour-utils/blob/master/python/shannon.py)
-  for an image.
- 
 * Import the [colour-utils colour.py
   code](https://github.com/straup/colour-utils/blob/master/python/colour.py) and
   allow for custom palettes when calculating the closest colour(s) for a
