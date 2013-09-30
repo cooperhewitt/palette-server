@@ -1,5 +1,12 @@
-from PIL import Image
-from PIL import ImageChops
+try:
+	from PIL import Image
+	from PIL import ImageChops
+except ImportError, e:
+	import Image
+	import ImageChops
+except Excetion, e:
+	raise Exception, e
+
 from collections import namedtuple
 from Counter import Counter
 from operator import itemgetter, mul, attrgetter
