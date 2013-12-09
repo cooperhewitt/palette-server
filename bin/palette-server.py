@@ -61,7 +61,7 @@ def app(environ, start_response):
         palette = map(prep, palette)
 
         return { 'reference-closest': 'css3', 'average': average, 'palette': palette }
-
+    
     status = '200 OK'
     rsp = {}
 
@@ -70,7 +70,11 @@ def app(environ, start_response):
     path = params.get('path', None)
 
     if not path:
-        rsp = {'stat': 'error', 'error': 'missing image'}
+        if 'favicon.ico' in environ.get('PATH_INFO', ''):
+            rsp = {'stat': 'ok', 'error': 'shh'}
+        else:
+            rsp = {'stat': 'error', 'error': 'missing image'}
+        return iter([rsp])
 
     else:
 
@@ -82,18 +86,30 @@ def app(environ, start_response):
         except Exception, e:
             logging.error(e)
             rsp = {'stat': 'error', 'error': "failed to process image: %s" % e}
-        
+    
     if rsp['stat'] != 'ok':
         status = "500 SERVER ERROR"
 
-    rsp = json.dumps(rsp)
+    if params.get('debug', None) != None:
+        html = '<h1>palette-server debug</h1>'
+        with open(path, "rb") as f:
+            data = f.read()
+            html += '<img width="500px" src="data:;base64,{0}" /><br/>'.format(data.encode("base64"))
+        for c in rsp['palette']:
+            html += '<span style="display:inline-block;width:25px;height:25px;margin:10px;background-color:{0};">&nbsp;</span>'.format(c['colour'])
+        rsp = html
+        start_response(status, [
+                ('Content-Type', 'text/html'),
+                ("Content-Length", str(len(rsp)))
+                ])
+    else:
+        rsp = json.dumps(rsp)
+        logging.debug("%s : %s" % (path, status))
 
-    logging.debug("%s : %s" % (path, status))
-
-    start_response(status, [
-            ("Content-Type", "text/javascript"),
-            ("Content-Length", str(len(rsp)))
-            ])
+        start_response(status, [
+                ("Content-Type", "text/javascript"),
+                ("Content-Length", str(len(rsp)))
+                ])
 
     return iter([rsp])
 
