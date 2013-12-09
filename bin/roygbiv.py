@@ -13,7 +13,7 @@ from operator import itemgetter, mul, attrgetter
 from colormath.color_objects import RGBColor
 import colorsys
 
-Color = namedtuple('Color', ['value', 'prominence'])
+Color = namedtuple('Color', ['value', 'prominence', 'saturation'])
 Palette = namedtuple('Palette', 'colors bgcolor')
 
 WHITE = (255, 255, 255)
@@ -81,11 +81,24 @@ class Roygbiv(object):
 	                # no nearby match
 	                aggregated[c] = n
 	                to_canonical[c] = c
-
-	    # order by prominence
-	    colors = sorted((Color(c, n / float(n_pixels)) \
-	                for (c, n) in aggregated.iteritems()),
-	            key=attrgetter('prominence'),
+	    
+	    # the colors
+	    colors = [Color(c, n / float(n_pixels), self.__get_saturation(c)) \
+	                for (c, n) in aggregated.iteritems()]
+	    # avg saturation:
+	    total_saturation = 0
+	    for c in colors:
+	        total_saturation += c.saturation
+	    avg_saturation = total_saturation / len(colors)
+	    
+	    # find the magic colors: more than double the average saturation
+	    magic = sorted([c for c in colors if c.saturation > avg_saturation*2 and c not in colors[:max_colors]], \
+	            key=lambda c: c.prominence*(1+c.saturation),
+	            reverse=True)
+	    
+	    # order by prominence boosted by saturation
+	    colors = sorted(colors,
+	            key=lambda c: c.prominence*(1+c.saturation),
 	            reverse=True)
 
 	    colors, bg_color = self.__detect_background(im, colors, to_canonical)
@@ -101,8 +114,13 @@ class Roygbiv(object):
 	        colors = colors[:1]
 
 	    # keep any color within 10% of the majority color
-	    colors = [c for c in colors if c.prominence >= colors[0].prominence
-	            * min_prominence][:max_colors]
+	    #colors = [c for c in colors if c.prominence >= colors[0].prominence
+	    #        * min_prominence][:max_colors]
+	    colors = colors[:max_colors]
+	    
+	    # add the magic color if it exists in enough of the image
+	    if len(magic) and magic[0] not in colors and magic[0].prominence > .01:
+	        colors[-1] = magic[0]
 
 	    return Palette(colors, bg_color)
 
@@ -120,8 +138,11 @@ class Roygbiv(object):
 		"Calculate the visual distance between the two colors."
 		return RGBColor(*c1).delta_e(RGBColor(*c2), method='cmc')
 
+	def __get_saturation(self, c):
+		return colorsys.rgb_to_hsv(*self.__norm_color(c))[1]
+    
 	def __meets_min_saturation(self, c, threshold):
-		return colorsys.rgb_to_hsv(*self.__norm_color(c.value))[1] > threshold
+		return c.saturation > threshold
 
 	def __norm_color(self, c):
 		r, g, b = c
