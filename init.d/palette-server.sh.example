@@ -10,8 +10,8 @@
 PS_ROOT='/usr/local/cooperhewitt/palette-server/bin/'
 
 GUNICORN=`which gunicorn`
-GUNICORN_OPTS='-u www-data -b 127.0.0.1:8000'
-# GUNICORN_OPTS='-u www-data -w 4 -b 127.0.0.1:8000 -k egg:gunicorn#gevent'
+# GUNICORN_OPTS='-u www-data -b 127.0.0.1:8000'
+GUNICORN_OPTS='-u www-data -w 4 -b 127.0.0.1:8228 -k egg:gunicorn#gevent'
 
 PIDFILE=/var/run/palette-server.pid
 
