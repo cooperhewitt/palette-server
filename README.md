@@ -51,7 +51,9 @@ get the palette server to tell you things by invoking it like this:
 To do
 --
 
-* Unbundle all the private/locally scoped functions inside of the `app` function. It works but it's kind of stupid.
+* HTTP `POST` support
+* Get from URL support
+* Better config options
 
 * Import the [colour-utils colour.py
   code](https://github.com/straup/colour-utils/blob/master/python/colour.py) and
@@ -64,21 +66,14 @@ constructor to accept a PIL.Image object rather than a filename) ... maybe
 
 * A proper `setup.py` script for installing dependencies (see below).
 
-* A proper `init.d` script (or equivalent) for starting and stopping the
-  palette-server.
-
 Dependencies
 --
 
 * [numpy](http://pypi.python.org/pypi/numpy)
-
 * [webcolors](http://pypi.python.org/pypi/webcolors/)
-
 * [colormath](http://pypi.python.org/pypi/colormath/)
-
 * [RoyGBiv](https://github.com/givp/RoyGBiv)
-
-* [gunicorn](http://www.gunicorn.org/)
+* [Flask]()
 
 See also
 --
