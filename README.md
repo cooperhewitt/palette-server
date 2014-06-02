@@ -1,21 +1,21 @@
 palette-server
 ==
 
-palette-server is a small little WSGI-compliant httpony to extract colours from an image.
+palette-server is a small littel Flask based HTTP-pony to extract colours from an image.
 
 How to run it
 --
 
 I don't know yet. In the meantime:
 
-	$> cd palette-server/bin
-	$> gunicorn palette-server:app
+	$> cd palette-server/flask
+	$> gunicorn server:app
 
 There's also a stub `init.d` script in the `init.d` directory. You will need to
 adjust the specifics (paths, gunicorn configs. etc.) to taste. Either way you
 get the palette server to tell you things by invoking it like this:
 
-	$>curl  'http://localhost:8000?path=/Users/asc/Desktop/cat.jpg' | python -m json.tool
+	$>curl  'http://localhost:8000/extract?path=/Users/asc/Desktop/cat.jpg' | python -m json.tool
 
 	{
 		"reference-closest": "css3",

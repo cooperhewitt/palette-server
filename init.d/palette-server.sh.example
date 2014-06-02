@@ -19,15 +19,15 @@ case $1 in
         echo "Starting event server (in debug mode)"
 
 	cd $PS_ROOT
-	echo sudo $GUNICORN $GUNICORN_OPTS palette-server:app
-	sudo $GUNICORN $GUNICORN_OPTS palette-server:app
+	echo sudo $GUNICORN $GUNICORN_OPTS server:app
+	sudo $GUNICORN $GUNICORN_OPTS server:app
 
         ;;
     start)
         echo "Starting event server"
 
 	cd $PS_ROOT
-	PID=`exec sudo -u www-data $GUNICORN $GUNICORN_OPTS palette-server:app > /dev/null 2>&1 & echo $!`
+	PID=`exec sudo -u www-data $GUNICORN $GUNICORN_OPTS server:app > /dev/null 2>&1 & echo $!`
 
         if [ -z $PID ]; then
             printf "%s\n" "Fail"
