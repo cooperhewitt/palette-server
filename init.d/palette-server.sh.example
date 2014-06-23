@@ -7,16 +7,20 @@
 # update-rc.d palette-server.sh defaults
 
 # Adjust to taste
-PS_ROOT='/usr/local/cooperhewitt/palette-server/bin/'
+
+PALETTE_ROOT='/usr/local/palette-server/flask'
+PALETTE_USER='www-data'
+PALETTE_HOST='127.0.0.1'
+PALETTE_PORT=8228
 
 GUNICORN=`which gunicorn`
-GUNICORN_OPTS="-u www-data -w 4 -b 127.0.0.1:8228 -k egg:gunicorn#gevent"
+GUNICORN_OPTS="-u ${PALETTE_USER} -w 4 -b ${PALETTE_HOST}:${PALETTE_PORT} -k egg:gunicorn#gevent --chdir ${PALETTE_ROOT}"
 
 PIDFILE=/var/run/palette-server.pid
 
 case $1 in
     debug)
-        echo "Starting event server (in debug mode)"
+        echo "Starting palette server (in debug mode)"
 
 	cd $PS_ROOT
 	echo sudo $GUNICORN $GUNICORN_OPTS server:app
@@ -24,7 +28,7 @@ case $1 in
 
         ;;
     start)
-        echo "Starting event server"
+        echo "Starting palette server"
 
 	cd $PS_ROOT
 	PID=`exec sudo -u www-data $GUNICORN $GUNICORN_OPTS server:app > /dev/null 2>&1 & echo $!`
@@ -39,7 +43,7 @@ case $1 in
 
         ;;
     stop)
-        echo "Stopping event server"
+        echo "Stopping palette server"
 
 	printf "%-50s" "Stopping $NAME"
             PID=`cat $PIDFILE`
@@ -58,7 +62,7 @@ case $1 in
         $0 start
         ;;
     status)
-        printf "%-50s" "Checking event-server..."
+        printf "%-50s" "Checking palette-server..."
         if [ -f $PIDFILE ]; then
             PID=`cat $PIDFILE`
             if [ -z "`ps axf | grep ${PID} | grep -v grep`" ]; then
