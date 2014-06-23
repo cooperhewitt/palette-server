@@ -2,13 +2,7 @@
 
 palette-server is a small littel Flask based HTTP-pony to extract colours from an image.
 
-## How to run it
-
-### Simple
-
-	$> cd palette-server
-	$> EXPORT PALETTE_SERVER_IMAGE_ROOT=/path/to/images
-	$> python flask/server.py
+## How to use it
 
 	$> curl  'http://localhost:5000/extract?path=cat.jpg' | python -m json.tool
 
@@ -43,7 +37,23 @@ palette-server is a small littel Flask based HTTP-pony to extract colours from a
 		"stat": "ok"
 	}
 
-### More complicated (gunicorn)
+See how the path is `/extract`. That's just a little bit of syntactic sugar to hide the colour analysis tool that we're using. Currently there is only one, Giv Parvaneh's [RoyGBiv](https://github.com/givp/RoyGBiv) but there may be others some day. You can address it directly like this:
+
+	$> curl  'http://localhost:5000/extract/roygbiv/?path=cat.jpg'
+
+... that the [cooperhewitt-swatchbook]() library exports. For example, if you want to use the Crayola crayon colour grid as a reference you could say:
+
+	$> curl  'http://localhost:5000/extract/roygbiv/crayola?path=cat.jpg'
+
+## How to run it
+
+### Flask
+
+	$> cd palette-server
+	$> EXPORT PALETTE_SERVER_IMAGE_ROOT=/path/to/images
+	$> python flask/server.py
+
+### gunicorn
 
 TBW
 

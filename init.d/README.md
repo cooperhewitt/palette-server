@@ -1,4 +1,4 @@
-# init.d
+# gunicorn
 
 ## palette-server.cfg
 
