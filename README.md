@@ -1,6 +1,6 @@
 # palette-server
 
-palette-server is a small littel Flask based HTTP-pony to extract colours from an image.
+palette-server is a small Flask based HTTP-pony to extract colours from an image.
 
 ## How to use it
 
