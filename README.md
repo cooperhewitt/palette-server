@@ -84,5 +84,5 @@ See also
 --
 
 * [All your color are belong to Giv](http://labs.cooperhewitt.org/2013/giv-do/)	
-
 * [Using python and k-means to find the dominant colors in images](http://charlesleifer.com/blog/using-python-and-k-means-to-find-the-dominant-colors-in-images/)
+* [colorific](https://github.com/99designs/colorific)
