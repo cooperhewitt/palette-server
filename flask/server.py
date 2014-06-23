@@ -56,7 +56,13 @@ def ping():
 @cross_origin(methods=['GET'])
 def get_palette(reference):
 
-    logging.debug("get palette with %s" % reference)
+    path = flask.request.args.get('path')
+
+    if not path:
+        logging.error('Missing path')
+        flask.abort(400)
+
+    path = ensure_path(path)
 
     try:
         ref = cooperhewitt.swatchbook.load_palette(reference)
@@ -64,29 +70,32 @@ def get_palette(reference):
         logging.error(e)
         flask.abort(404)
 
-    path = flask.request.args.get('path')
+    logging.debug("get palette for %s, with %s" % (path, reference))
 
-    if not path:
-        flask.abort(400)
+    try:
+        roy = roygbiv.Roygbiv(path)
+        average = roy.get_average_hex()
+        palette = roy.get_palette_hex()
 
-    path = ensure_path(path)
-
-    # Validate path here
-
-    roy = roygbiv.Roygbiv(path)
-    average = roy.get_average_hex()
-    palette = roy.get_palette_hex()
+    except Exception, e:
+        logging.error(e)
+        flask.abort(500)
 
     def prep(hex):
         c_hex, c_name = ref.closest(hex)        
         return {'color': hex, 'closest': c_hex}
 
-    average = prep(average)
-    palette = map(prep, palette)
-    
+    try:
+        average = prep(average)
+        palette = map(prep, palette)
+    except Exception, e:
+        logging.error(e)
+        flask.abort(500)
+        
     rsp = {
         'reference-closest': reference,
-        'average': average, 'palette': palette
+        'average': average,
+        'palette': palette
     }
 
     return flask.jsonify(**rsp)
