@@ -22,16 +22,15 @@ PIDFILE=/var/run/palette-server.pid
 case $1 in
     debug)
         echo "Starting palette server (in debug mode)"
-
-	cd $PS_ROOT
 	echo sudo $GUNICORN $GUNICORN_OPTS server:app
+
+	export PALETTE_SERVER_IMAGE_ROOT=${PALETTE_IMAGE_ROOT}
 	sudo $GUNICORN $GUNICORN_OPTS server:app
 
         ;;
     start)
         echo "Starting palette server"
 
-	cd $PS_ROOT
 	PID=`exec sudo -u www-data $GUNICORN $GUNICORN_OPTS server:app > /dev/null 2>&1 & echo $!`
 
         if [ -z $PID ]; then

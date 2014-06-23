@@ -6,6 +6,10 @@ import os.path
 import flask
 from flask_cors import cross_origin 
 
+# This doesn't seem to help make this work with gunicorn
+# http://www.onurguzel.com/how-to-run-flask-applications-with-nginx-using-gunicorn/
+# from werkzeug.contrib.fixers import ProxyFix
+
 import cooperhewitt.swatchbook
 import roygbiv
 
@@ -116,6 +120,9 @@ def extract_roygbiv(reference):
     }
 
     return flask.jsonify(**rsp)
+
+# See above
+# app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
     debug = True	# sudo make me a CLI option
