@@ -14,10 +14,17 @@ logging.basicConfig(level=logging.DEBUG)
 
 app = flask.Flask(__name__)
 
+# Quick. And dirty. To figure out:
+# http://flask.pocoo.org/docs/config/
+# https://github.com/mbr/flask-appconfig
+# (20140602/straup)
+
+if os.environ.get('PALETTE_SERVER_IMAGE_ROOT', None):
+    app.config['PALETTE_SERVER_IMAGE_ROOT'] = os.environ['PALETTE_SERVER_IMAGE_ROOT']
+
 def build_path(path=None):
 
-    # TO DO: read from config / env
-    root = None
+    root = app.config.get('PALETTE_SERVER_IMAGE_ROOT', None)
 
     if not root or not os.path.isdir(root):
         logging.error("Missing root")

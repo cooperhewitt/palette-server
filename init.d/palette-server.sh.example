@@ -12,6 +12,7 @@ PALETTE_ROOT='/usr/local/palette-server/flask'
 PALETTE_USER='www-data'
 PALETTE_HOST='127.0.0.1'
 PALETTE_PORT=8228
+PALETTE_IMAGE_ROOT=''
 
 GUNICORN=`which gunicorn`
 GUNICORN_OPTS="-u ${PALETTE_USER} -w 4 -b ${PALETTE_HOST}:${PALETTE_PORT} -k egg:gunicorn#gevent --chdir ${PALETTE_ROOT}"
