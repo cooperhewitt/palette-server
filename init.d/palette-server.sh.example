@@ -7,15 +7,10 @@
 # update-rc.d palette-server.sh defaults
 
 # Adjust to taste
-
-PALETTE_ROOT='/usr/local/palette-server/flask'
-PALETTE_USER='www-data'
-PALETTE_HOST='127.0.0.1'
-PALETTE_PORT=8228
-PALETTE_IMAGE_ROOT=''
+PALETTE_SERVER_CONFIG='/usr/local/palette-server/init.d/palette-server.cfg'
 
 GUNICORN=`which gunicorn`
-GUNICORN_OPTS="-u ${PALETTE_USER} -w 4 -b ${PALETTE_HOST}:${PALETTE_PORT} -k egg:gunicorn#gevent --chdir ${PALETTE_ROOT}"
+GUNICORN_OPTS="-c ${PALETTE_SERVER_CONFIG}"
 
 PIDFILE=/var/run/palette-server.pid
 
@@ -24,14 +19,15 @@ case $1 in
         echo "Starting palette server (in debug mode)"
 	echo sudo $GUNICORN $GUNICORN_OPTS server:app
 
-	export PALETTE_SERVER_IMAGE_ROOT=${PALETTE_IMAGE_ROOT}
 	sudo $GUNICORN $GUNICORN_OPTS server:app
 
         ;;
     start)
+
         echo "Starting palette server"
 
-	PID=`exec sudo -u www-data $GUNICORN $GUNICORN_OPTS server:app > /dev/null 2>&1 & echo $!`
+	PID=`exec sudo $GUNICORN $GUNICORN_OPTS server:app > /dev/null 2>&1 & echo $!`
+	echo "PID: ${PID}"
 
         if [ -z $PID ]; then
             printf "%s\n" "Fail"
