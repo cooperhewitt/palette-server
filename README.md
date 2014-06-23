@@ -69,6 +69,7 @@ constructor to accept a PIL.Image object rather than a filename) ... maybe
 Dependencies
 --
 
+* [cooperhewitt-swatchbook]()
 * [numpy](http://pypi.python.org/pypi/numpy)
 * [webcolors](http://pypi.python.org/pypi/webcolors/)
 * [colormath](http://pypi.python.org/pypi/colormath/)

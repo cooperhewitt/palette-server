@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+import os
+import os.path
+
 import flask
 from flask_cors import cross_origin 
 
@@ -22,12 +25,13 @@ def ping():
 @cross_origin(methods=['GET'])
 def get_palette(reference):
 
-    reference = "fix-me-palettes/%s.json" % reference
+    logging.debug("get palette with %s" % reference)
 
-    if not os.path.exists(palette):
+    try:
+        ref = cooperhewitt.swatchbook.load_palette(reference)
+    except Exception, e:
+        logging.error(e)
         flask.abort(404)
-
-    sb = cooperhewitt.swatchbook.palette(reference)
 
     path = flask.request.args.get('path')
 
@@ -44,8 +48,8 @@ def get_palette(reference):
     palette = roy.get_palette_hex()
 
     def prep(hex):
-        c_hex, c_name = sb.closest_colour(hex)        
-        return {'color': c_hex, 'closest': closest}
+        c_hex, c_name = ref.closest(hex)        
+        return {'color': hex, 'closest': c_hex}
 
     average = prep(average)
     palette = map(prep, palette)
