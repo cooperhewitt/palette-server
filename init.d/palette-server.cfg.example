@@ -1,0 +1,14 @@
+# http://gunicorn-docs.readthedocs.org/en/latest/configure.html#configuration-file
+
+import os
+import multiprocessing
+
+workers = multiprocessing.cpu_count() * 2 + 1
+worker_class = "egg:gunicorn#gevent"
+
+bind = '127.0.0.1:8228'
+chdir = '/usr/local/palette-server/flask'
+user = 'www-data'
+
+os.environ['PALETTE_SERVER_IMAGE_ROOT'] = '/where/to/look/for/images'
+

@@ -5,10 +5,7 @@ import os.path
 
 import flask
 from flask_cors import cross_origin 
-
-# This doesn't seem to help make this work with gunicorn
-# http://www.onurguzel.com/how-to-run-flask-applications-with-nginx-using-gunicorn/
-# from werkzeug.contrib.fixers import ProxyFix
+from werkzeug.contrib.fixers import ProxyFix
 
 import cooperhewitt.swatchbook
 import roygbiv
@@ -17,18 +14,11 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 app = flask.Flask(__name__)
-
-# Quick. And dirty. To figure out:
-# http://flask.pocoo.org/docs/config/
-# https://github.com/mbr/flask-appconfig
-# (20140602/straup)
-
-if os.environ.get('PALETTE_SERVER_IMAGE_ROOT', None):
-    app.config['PALETTE_SERVER_IMAGE_ROOT'] = os.environ['PALETTE_SERVER_IMAGE_ROOT']
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 def build_path(path=None):
 
-    root = app.config.get('PALETTE_SERVER_IMAGE_ROOT', None)
+    root = os.environ.get('PALETTE_SERVER_IMAGE_ROOT', None)
 
     if not root or not os.path.isdir(root):
         logging.error("Missing root")
@@ -120,9 +110,6 @@ def extract_roygbiv(reference):
     }
 
     return flask.jsonify(**rsp)
-
-# See above
-# app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
     debug = True	# sudo make me a CLI option
