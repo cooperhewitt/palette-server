@@ -52,9 +52,19 @@ def ping():
     rsp = {'stat': 'ok'}
     return flask.jsonify(**rsp)
 
-@app.route('/extract/<reference>', methods=['GET'])
+@app.route('/extract', methods=['GET'])
 @cross_origin(methods=['GET'])
-def get_palette(reference):
+def extract_roy():
+    return extract_roygbiv('css3')
+
+@app.route('/extract/roygbiv', methods=['GET'])
+@cross_origin(methods=['GET'])
+def extract_roy_explicit():
+    return extract_roygbiv('css3')
+
+@app.route('/extract/roygbiv/<reference>', methods=['GET'])
+@cross_origin(methods=['GET'])
+def extract_roygbiv(reference):
 
     path = flask.request.args.get('path')
 
