@@ -9,6 +9,7 @@ worker_class = "egg:gunicorn#gevent"
 bind = '127.0.0.1:8228'
 chdir = '/usr/local/palette-server/flask'
 user = 'www-data'
+images = '/where/to/look/for/images'
 
-os.environ['PALETTE_SERVER_IMAGE_ROOT'] = '/where/to/look/for/images'
+os.environ['PALETTE_SERVER_IMAGE_ROOT'] = images
 

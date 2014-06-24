@@ -89,7 +89,7 @@ There is none, by default. This is not necessarily a service that is meant to be
 
 ### gunicorn
 
-`palette-server` will work with any WSGI-compliant server architecture but there are sample configuration files and `init.d` scripts included with this repository for running things, as a daemonized service, under [gunicorn](http://www.gunicorn.org).
+`palette-server` will work with any WSGI-compliant server architecture but there are [sample configuration files and `init.d` scripts](https://github.com/cooperhewitt/palette-server/tree/master/init.d) included with this repository for running things, as a daemonized service, under [gunicorn](http://www.gunicorn.org).
 
 # To do
 
