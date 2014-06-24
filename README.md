@@ -93,7 +93,7 @@ There is none, by default. This is not necessarily a service that is meant to be
 
 # To do
 
-* HTTP `POST` support
+* HTTP `POST` support (upload files)
 * Get from URL support
 * Better config options
 * A build-pack for Heroku, and friends
