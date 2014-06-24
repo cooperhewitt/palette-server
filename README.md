@@ -37,40 +37,76 @@ palette-server is a small Flask based HTTP-pony to extract colours from an image
 		"stat": "ok"
 	}
 
-See how the path is `/extract`. That's just a little bit of syntactic sugar to hide the colour analysis tool that we're using. Currently there is only one, Giv Parvaneh's [RoyGBiv](https://github.com/givp/RoyGBiv) but there may be others some day. You can address it directly like this:
+Did you notice the way the path for the request is `/extract`? There are two reasons for that:
+
+* Backwards compatibility with earlier versions of `palette-server`
+* Syntactic sugar to hide the colour analysis tool and the colour reference that we're using (to determine the "closest" colour).
+
+Currently there is only one colour analysis tool – Giv Parvaneh's [RoyGBiv](https://github.com/givp/RoyGBiv) – but there may be others some day. You can address it directly like this:
 
 	$> curl  'http://localhost:5000/extract/roygbiv/?path=cat.jpg'
 
-... that the [cooperhewitt-swatchbook]() library exports. For example, if you want to use the Crayola crayon colour grid as a reference you could say:
+`palette-server` also allows you to pair the colour palette to any reference grid that the [cooperhewitt-swatchbook](https://github.com/cooperhewitt/py-cooperhewitt-swatchbook) library exports. For example, if you want to use the Crayola crayon colour scheme as a reference you could say:
 
 	$> curl  'http://localhost:5000/extract/roygbiv/crayola?path=cat.jpg'
 
+The default reference grid is CSS3.
+
+If you just want to test that the server is up and running you can call the `/ping` endpoint, like this:
+
+	$> curl  'http://localhost:5000/ping'
+
+	{
+		"stat": "ok"
+	}
+
 ## How to run it
 
+### First things first
+
+#### Images
+
+`palette-server` limits itself to processing only those images that it can find in a user-defined directory. Currently this is being configued as an environment variable (mostly because none of the configuration options for Flask stand out as "simple"). For example:
+
+	$> EXPORT PALETTE_SERVER_IMAGE_ROOT=/path/to/images
+
+_Alternative suggestions and patches are welcome. This works but is not awesome, by any means._
+
+#### Authentication and authorization
+
+There is none, by default. This is not necessarily a service that is meant to be public-facing and assumes that unless you are planning to open things up to the world that you are running on a machine with suitable access control restrictions at the network layer.
+
 ### Flask
+
+`palette-server` is a Flask application so you can start it up, from the command-line, like this:
 
 	$> cd palette-server
 	$> EXPORT PALETTE_SERVER_IMAGE_ROOT=/path/to/images
 	$> python flask/server.py
 
+	INFO:werkzeug: * Running on http://127.0.0.1:5000/
+	INFO:werkzeug: * Restarting with reloader
+
 ### gunicorn
 
-TBW
+`palette-server` will work with any WSGI-compliant server architecture but there are sample configuration files and `init.d` scripts included with this repository for running things, as a daemonized service, under [gunicorn](http://www.gunicorn.org).
 
 # To do
 
 * HTTP `POST` support
 * Get from URL support
 * Better config options
+* A build-pack for Heroku, and friends
+* A proper setup file or build script for dependencies
 
 # Dependencies
 
-* [cooperhewitt-swatchbook]()
+* [cooperhewitt-swatchbook](https://github.com/cooperhewitt/py-cooperhewitt-swatchbook)
 * [numpy](http://pypi.python.org/pypi/numpy)
 * [webcolors](http://pypi.python.org/pypi/webcolors/)
 * [colormath](http://pypi.python.org/pypi/colormath/)
 * [RoyGBiv](https://github.com/givp/RoyGBiv)
-* [Flask]()
+* [Flask](http://flask.pocoo.org/)
 
 # See also
 
