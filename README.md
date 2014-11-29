@@ -2,6 +2,8 @@
 
 palette-server is a small Flask based HTTP-pony to extract colours from an image.
 
+**This package is officially DEPRECATED. You should consult [plumbing-palette-server](https://github.com/cooperhewitt/plumbing-palette-server) instead.**
+
 ## How to use it
 
 	$> curl  'http://localhost:5000/extract?path=cat.jpg' | python -m json.tool
